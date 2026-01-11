@@ -53,7 +53,7 @@ export default function createStore(initial_state: StoreState): Store {
     const args: CalculateTreeOptions = {
       main_id: state.main_id,
     };
-    
+
     if (state.node_separation !== undefined) args.node_separation = state.node_separation;
     if (state.level_separation !== undefined) args.level_separation = state.level_separation;
     if (state.single_parent_empty_card !== undefined) args.single_parent_empty_card = state.single_parent_empty_card;
@@ -65,9 +65,10 @@ export default function createStore(initial_state: StoreState): Store {
     if (state.ancestry_depth !== undefined) args.ancestry_depth = state.ancestry_depth;
     if (state.progeny_depth !== undefined) args.progeny_depth = state.progeny_depth;
     if (state.show_siblings_of_main !== undefined) args.show_siblings_of_main = state.show_siblings_of_main;
+    if (state.show_all_siblings !== undefined) args.show_all_siblings = state.show_all_siblings;
     if (state.private_cards_config !== undefined) args.private_cards_config = state.private_cards_config;
     if (state.duplicate_branch_toggle !== undefined) args.duplicate_branch_toggle = state.duplicate_branch_toggle;
-    
+
     return calculateTree(state.data, args);
   }
 

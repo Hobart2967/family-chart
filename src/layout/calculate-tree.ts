@@ -1,5 +1,5 @@
 import * as d3 from "d3";
-import { sortChildrenWithSpouses, sortAddNewChildren, setupSiblings, handlePrivateCards } from "./handlers";
+import { sortChildrenWithSpouses, sortAddNewChildren, setupSiblings, setupAllSiblings, handlePrivateCards } from "./handlers";
 import { createNewPerson } from "../store/new-person";
 import { isAllRelativeDisplayed } from "../handlers/general";
 import { handleDuplicateSpouseToggle, handleDuplicateHierarchyProgeny } from "../features/duplicates-toggle/duplicates-progeny";
@@ -21,6 +21,7 @@ export interface CalculateTreeOptions {
   ancestry_depth?: number | undefined;
   progeny_depth?: number | undefined;
   show_siblings_of_main?: boolean;
+  show_all_siblings?: boolean;
   modifyTreeHierarchy?: (tree: HN, is_ancestry: boolean) => void;
   private_cards_config?: any;
   duplicate_branch_toggle?: boolean;
@@ -48,6 +49,7 @@ export default function calculateTree(data: Data, {
   ancestry_depth = undefined,
   progeny_depth = undefined,
   show_siblings_of_main = false,
+  show_all_siblings = false,
   modifyTreeHierarchy=undefined,
   private_cards_config = undefined,
   duplicate_branch_toggle = false,
@@ -70,7 +72,16 @@ export default function calculateTree(data: Data, {
   const tree = mergeSides(tree_parents, tree_children)
   setupChildrenAndParents(tree)
   setupSpouses(tree, node_separation)
-  if (show_siblings_of_main && !one_level_rels) setupSiblings({tree, data_stash, node_separation, sortChildrenFunction})
+  if (!one_level_rels) {
+    if (show_all_siblings) {
+      // show_all_siblings overrides show_siblings_of_main
+      setupSiblings({tree, data_stash, node_separation, sortChildrenFunction})
+      setupAllSiblings({tree, data_stash, node_separation, sortChildrenFunction})
+    } else if (show_siblings_of_main) {
+      // Only show siblings of main person
+      setupSiblings({tree, data_stash, node_separation, sortChildrenFunction})
+    }
+  }
   setupProgenyParentsPos(tree)
   nodePositioning(tree)
   tree.forEach(d => d.all_rels_displayed = isAllRelativeDisplayed(d, tree))
@@ -325,7 +336,7 @@ export default function calculateTree(data: Data, {
       }
     }
   }
-  
+
   function handleDuplicateHierarchy(root:HN, data_stash:Data, is_ancestry:boolean) {
     if (is_ancestry) handleDuplicateHierarchyAncestry(root, on_toggle_one_close_others)
     else handleDuplicateHierarchyProgeny(root, data_stash, on_toggle_one_close_others)
@@ -350,7 +361,7 @@ function setupTid(tree:TreeDatum[]) {
 }
 
 
-/** 
+/**
  * Calculate the tree
  * @param options - The options for the tree
  * @param options.data - The data for the tree

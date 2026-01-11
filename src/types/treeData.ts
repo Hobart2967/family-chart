@@ -70,7 +70,7 @@ export interface TreeDatum {
   /** True if this person is an ancestor. */
   is_ancestry?: boolean;
 
-  /** True if this node is a sibling (setShowSiblingsOfMain is true). */
+  /** True if this node is a sibling (either of the main person when show_siblings_of_main is true, or any sibling when show_all_siblings is true). */
   sibling?: boolean;
 
   /** True if this card is private and should be treated differently. */

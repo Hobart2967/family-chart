@@ -27,13 +27,13 @@ export default function createChart(cont: HTMLElement | string, data: Data) {
 
 /**
  * Main Chart class - The primary class for creating and managing family tree visualizations.
- * 
+ *
  * This is the main entry point for the Family Chart library. Use this class to:
  * - Create and configure family tree visualizations
  * - Set up data, styling, and interaction options
  * - Control tree layout, orientation, and display settings
  * - Manage user interactions and updates
- * 
+ *
  * @example
  * ```typescript
  * const f3Chart = createChart('#FamilyChart', data)  // returns a Chart instance;
@@ -60,12 +60,12 @@ export class Chart {
     this.transition_time = 2000
     this.linkSpouseText = null
     this.personSearch = null
-  
+
     this.is_card_html = false
-  
+
     this.beforeUpdate = null
     this.afterUpdate = null
-    
+
 
     this.cont = setCont(cont)
     const {svg} = htmlContSetup(this.cont)
@@ -140,7 +140,7 @@ export class Chart {
     }
 
     this.store.state.level_separation = card_y_spacing
-  
+
     return this
   }
 
@@ -155,7 +155,7 @@ export class Chart {
       return this
     }
     this.store.state.node_separation = card_x_spacing
-  
+
     return this
   }
 
@@ -184,7 +184,18 @@ export class Chart {
    */
   setShowSiblingsOfMain(show_siblings_of_main: ST.ShowSiblingsOfMain) {
     this.store.state.show_siblings_of_main = show_siblings_of_main
-  
+
+    return this
+  }
+
+  /**
+   * Set whether to show all siblings throughout the tree (overrides setShowSiblingsOfMain)
+   * @param show_all_siblings - Whether to show all siblings at every level of the tree.
+   * @returns The CreateChart instance
+   */
+  setShowAllSiblings(show_all_siblings: ST.ShowAllSiblings) {
+    this.store.state.show_all_siblings = show_all_siblings
+
     return this
   }
 
@@ -197,7 +208,7 @@ export class Chart {
     this.store.state.modifyTreeHierarchy = modifyTreeHierarchy
     return this
   }
-  
+
   /**
    * Set the private cards config
    * @param private_cards_config - The private cards config.
@@ -207,10 +218,10 @@ export class Chart {
    */
   setPrivateCardsConfig(private_cards_config: ST.PrivateCardsConfig) {
     this.store.state.private_cards_config = private_cards_config
-  
+
     return this
   }
-  
+
   /**
    * Option to set text on spouse links
    * @param linkSpouseText - The function to set the text on the spouse links.
@@ -219,7 +230,7 @@ export class Chart {
    */
   setLinkSpouseText(linkSpouseText: LinkSpouseText) {
     this.linkSpouseText = linkSpouseText
-  
+
     return this
   }
 
@@ -259,7 +270,7 @@ export class Chart {
     this.is_card_html = true
     this.svg.querySelector('.cards_view')!.innerHTML = ''
     htmlSvg.style.display = 'block'
-  
+
     const card = cardHtml(this.cont, this.store)
     this.getCard = () => card.getCard()
 
@@ -310,7 +321,7 @@ export class Chart {
   /**
    * Set the sort spouses function
    * @param sortSpousesFunction - The sort spouses function.
-   * - Example: 
+   * - Example:
    *   (d, data) => {
    *     const spouses = d.data.rels.spouses || []
    *     return spouses.sort((a, b) => {
