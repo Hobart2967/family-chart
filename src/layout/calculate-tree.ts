@@ -26,6 +26,7 @@ export interface CalculateTreeOptions {
   private_cards_config?: any;
   duplicate_branch_toggle?: boolean;
   on_toggle_one_close_others?: boolean;
+  link_curve?: boolean;
 }
 
 export interface Tree {
@@ -34,6 +35,7 @@ export interface Tree {
   dim: { width: number; height: number; x_off: number; y_off: number };
   main_id: string;
   is_horizontal: boolean;
+  link_curve: boolean;
 }
 
 
@@ -54,6 +56,7 @@ export default function calculateTree(data: Data, {
   private_cards_config = undefined,
   duplicate_branch_toggle = false,
   on_toggle_one_close_others = true,
+  link_curve = true,
 }: CalculateTreeOptions): Tree {
   if (!data || !data.length) throw new Error('No data')
 
@@ -91,7 +94,7 @@ export default function calculateTree(data: Data, {
   if (duplicate_branch_toggle) handleDuplicateSpouseToggle(tree)
   const dim = calculateTreeDim(tree, node_separation, level_separation)
 
-  return {data: tree, data_stash, dim, main_id: main.id, is_horizontal}
+  return {data: tree, data_stash, dim, main_id: main.id, is_horizontal, link_curve}
 
   function calculateTreePositions(datum:Datum, rt:'children' | 'parents', is_ancestry:boolean) {
     const hierarchyGetter = rt === "children" ? hierarchyGetterChildren : hierarchyGetterParents

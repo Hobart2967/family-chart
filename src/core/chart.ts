@@ -200,6 +200,17 @@ export class Chart {
   }
 
   /**
+   * Set whether to use curved lines for connections
+   * @param link_curve - Whether to use curved lines (true) or straight lines (false).
+   * @returns The CreateChart instance
+   */
+  setLinkCurve(link_curve: ST.LinkCurve) {
+    this.store.state.link_curve = link_curve
+
+    return this
+  }
+
+  /**
    * set function that will modify the tree hierarchy. it can be used to delete or add cards in the tree.
    * @param modifyTreeHierarchy - function that will modify the tree hierarchy.
    * @returns The CreateChart instance

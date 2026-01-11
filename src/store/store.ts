@@ -66,6 +66,7 @@ export default function createStore(initial_state: StoreState): Store {
     if (state.progeny_depth !== undefined) args.progeny_depth = state.progeny_depth;
     if (state.show_siblings_of_main !== undefined) args.show_siblings_of_main = state.show_siblings_of_main;
     if (state.show_all_siblings !== undefined) args.show_all_siblings = state.show_all_siblings;
+    if (state.link_curve !== undefined) args.link_curve = state.link_curve;
     if (state.private_cards_config !== undefined) args.private_cards_config = state.private_cards_config;
     if (state.duplicate_branch_toggle !== undefined) args.duplicate_branch_toggle = state.duplicate_branch_toggle;
 

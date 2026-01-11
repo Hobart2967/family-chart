@@ -8,7 +8,7 @@ import { LinkSelection } from "../types/view"
 
 export default function updateLinks(svg: SVGElement, tree: Tree, props: ViewProps = {}) {
   const links_data_dct = tree.data.reduce((acc: Record<string, Link>, d) => {
-    createLinks(d, tree.is_horizontal).forEach(l => acc[l.id] = l)
+    createLinks(d, tree.is_horizontal, tree.link_curve).forEach(l => acc[l.id] = l)
     return acc
   }, {})
   const links_data: Link[] = Object.values(links_data_dct)

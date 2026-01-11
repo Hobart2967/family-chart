@@ -14,6 +14,7 @@ export type PrivateCardsConfig = {
 };
 export type ShowSiblingsOfMain = boolean;
 export type ShowAllSiblings = boolean;
+export type LinkCurve = boolean;
 export type ModifyTreeHierarchy = CalculateTreeOptions['modifyTreeHierarchy'];
 export type SortChildrenFunction = ((a: Datum, b: Datum) => number);
 export type SortSpousesFunction = ((d: Datum, data: Data) => void);
@@ -36,6 +37,7 @@ export interface StoreState extends CalculateTreeOptions {
   private_cards_config?: PrivateCardsConfig;
   show_siblings_of_main?: ShowSiblingsOfMain;
   show_all_siblings?: ShowAllSiblings;
+  link_curve?: LinkCurve;
   sortChildrenFunction?: SortChildrenFunction;
   sortSpousesFunction?: SortSpousesFunction;
   ancestry_depth?: AncestryDepth;
